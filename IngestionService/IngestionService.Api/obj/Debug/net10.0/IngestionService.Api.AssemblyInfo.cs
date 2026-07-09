@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("IngestionService.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+49c2b975e099c62c682aba64c4ce3228dd30aefa")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+95c1ca4b37746ae89bcd641168dfe3ce64566c40")]
 [assembly: System.Reflection.AssemblyProductAttribute("IngestionService.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("IngestionService.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

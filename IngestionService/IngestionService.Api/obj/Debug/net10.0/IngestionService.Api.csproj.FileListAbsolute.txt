@@ -32,3 +32,4 @@ C:\Users\Sagar\source\repos\IngestionForIoTDevices\IngestionService\IngestionSer
 C:\Users\Sagar\source\repos\IngestionForIoTDevices\IngestionService\IngestionService.Api\obj\Debug\net10.0\IngestionService.Api.pdb
 C:\Users\Sagar\source\repos\IngestionForIoTDevices\IngestionService\IngestionService.Api\obj\Debug\net10.0\IngestionService.Api.genruntimeconfig.cache
 C:\Users\Sagar\source\repos\IngestionForIoTDevices\IngestionService\IngestionService.Api\obj\Debug\net10.0\ref\IngestionService.Api.dll
+C:\Users\Sagar\source\repos\IngestionForIoTDevices\IngestionService\IngestionService.Api\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt
