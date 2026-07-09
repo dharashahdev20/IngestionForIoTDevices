@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "4b3KrgxmiNQ=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Sagar\\source\\repos\\IngestionForIoTDevices\\IngestionService\\IngestionService.Api\\IngestionService.Api.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Sagar\\.nuget\\packages\\microsoft.aspnetcore.openapi\\10.0.9\\microsoft.aspnetcore.openapi.10.0.9.nupkg.sha512",
+    "C:\\Users\\Sagar\\.nuget\\packages\\microsoft.openapi\\3.8.0\\microsoft.openapi.3.8.0.nupkg.sha512"
+  ],
+  "logs": []
+}

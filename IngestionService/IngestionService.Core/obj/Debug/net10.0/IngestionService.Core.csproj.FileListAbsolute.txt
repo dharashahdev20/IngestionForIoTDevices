@@ -1,0 +1,12 @@
+C:\Users\Sagar\source\repos\IngestionForIoTDevices\IngestionService\IngestionService.Core\bin\Debug\net10.0\IngestionService.Core.deps.json
+C:\Users\Sagar\source\repos\IngestionForIoTDevices\IngestionService\IngestionService.Core\bin\Debug\net10.0\IngestionService.Core.dll
+C:\Users\Sagar\source\repos\IngestionForIoTDevices\IngestionService\IngestionService.Core\bin\Debug\net10.0\IngestionService.Core.pdb
+C:\Users\Sagar\source\repos\IngestionForIoTDevices\IngestionService\IngestionService.Core\obj\Debug\net10.0\IngestionService.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Sagar\source\repos\IngestionForIoTDevices\IngestionService\IngestionService.Core\obj\Debug\net10.0\IngestionService.Core.AssemblyInfoInputs.cache
+C:\Users\Sagar\source\repos\IngestionForIoTDevices\IngestionService\IngestionService.Core\obj\Debug\net10.0\IngestionService.Core.AssemblyInfo.cs
+C:\Users\Sagar\source\repos\IngestionForIoTDevices\IngestionService\IngestionService.Core\obj\Debug\net10.0\IngestionService.Core.csproj.CoreCompileInputs.cache
+C:\Users\Sagar\source\repos\IngestionForIoTDevices\IngestionService\IngestionService.Core\obj\Debug\net10.0\IngestionService.Core.sourcelink.json
+C:\Users\Sagar\source\repos\IngestionForIoTDevices\IngestionService\IngestionService.Core\obj\Debug\net10.0\IngestionService.Core.dll
+C:\Users\Sagar\source\repos\IngestionForIoTDevices\IngestionService\IngestionService.Core\obj\Debug\net10.0\refint\IngestionService.Core.dll
+C:\Users\Sagar\source\repos\IngestionForIoTDevices\IngestionService\IngestionService.Core\obj\Debug\net10.0\IngestionService.Core.pdb
+C:\Users\Sagar\source\repos\IngestionForIoTDevices\IngestionService\IngestionService.Core\obj\Debug\net10.0\ref\IngestionService.Core.dll

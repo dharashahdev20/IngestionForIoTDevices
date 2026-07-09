@@ -1,0 +1,12 @@
+C:\Users\Sagar\source\repos\IngestionForIoTDevices\IngestionService\IngestionService.Benchmarks\bin\Debug\net10.0\IngestionService.Benchmarks.deps.json
+C:\Users\Sagar\source\repos\IngestionForIoTDevices\IngestionService\IngestionService.Benchmarks\bin\Debug\net10.0\IngestionService.Benchmarks.dll
+C:\Users\Sagar\source\repos\IngestionForIoTDevices\IngestionService\IngestionService.Benchmarks\bin\Debug\net10.0\IngestionService.Benchmarks.pdb
+C:\Users\Sagar\source\repos\IngestionForIoTDevices\IngestionService\IngestionService.Benchmarks\obj\Debug\net10.0\IngestionService.Benchmarks.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Sagar\source\repos\IngestionForIoTDevices\IngestionService\IngestionService.Benchmarks\obj\Debug\net10.0\IngestionService.Benchmarks.AssemblyInfoInputs.cache
+C:\Users\Sagar\source\repos\IngestionForIoTDevices\IngestionService\IngestionService.Benchmarks\obj\Debug\net10.0\IngestionService.Benchmarks.AssemblyInfo.cs
+C:\Users\Sagar\source\repos\IngestionForIoTDevices\IngestionService\IngestionService.Benchmarks\obj\Debug\net10.0\IngestionService.Benchmarks.csproj.CoreCompileInputs.cache
+C:\Users\Sagar\source\repos\IngestionForIoTDevices\IngestionService\IngestionService.Benchmarks\obj\Debug\net10.0\IngestionService.Benchmarks.sourcelink.json
+C:\Users\Sagar\source\repos\IngestionForIoTDevices\IngestionService\IngestionService.Benchmarks\obj\Debug\net10.0\IngestionService.Benchmarks.dll
+C:\Users\Sagar\source\repos\IngestionForIoTDevices\IngestionService\IngestionService.Benchmarks\obj\Debug\net10.0\refint\IngestionService.Benchmarks.dll
+C:\Users\Sagar\source\repos\IngestionForIoTDevices\IngestionService\IngestionService.Benchmarks\obj\Debug\net10.0\IngestionService.Benchmarks.pdb
+C:\Users\Sagar\source\repos\IngestionForIoTDevices\IngestionService\IngestionService.Benchmarks\obj\Debug\net10.0\ref\IngestionService.Benchmarks.dll
