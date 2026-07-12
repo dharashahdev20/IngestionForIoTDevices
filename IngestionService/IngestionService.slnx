@@ -2,5 +2,6 @@
   <Project Path="IngestionService.Api/IngestionService.Api.csproj" Id="e4b339a6-1f27-4d20-ab4f-4ac9cac7231f" />
   <Project Path="IngestionService.Benchmarks/IngestionService.Benchmarks.csproj" Id="8c7622de-c54f-4e73-b1dc-f1c031907552" />
   <Project Path="IngestionService.Core/IngestionService.Core.csproj" Id="f3b67dfd-2449-410d-b185-2eab8b7c4642" />
+  <Project Path="IngestionService.IntegrationTests/IngestionService.IntegrationTests.csproj" Id="3ceef9ab-f767-4372-8fd9-b9f5c95ef945" />
   <Project Path="IngestionService.Tests/IngestionService.Tests.csproj" Id="42c3e650-a7a6-4d39-b3a5-2f20f2c95db3" />
 </Solution>
