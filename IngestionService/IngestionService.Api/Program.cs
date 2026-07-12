@@ -1,5 +1,8 @@
 using IngestionService.Core.Aggregation;
 using IngestionService.Core.Ingestion;
+using System.Diagnostics;
+using System.Text.Json;
+using IngestionService.Api.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +28,10 @@ builder.Services.AddSingleton<AggregatorStore>();
 
 var app = builder.Build();
 
+app.Logger.LogInformation("IoT Ingestion Service started in {Environment}", app.Environment.EnvironmentName);
+
+app.UseGlobalExceptionHandling();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -34,18 +41,27 @@ if (app.Environment.IsDevelopment())
         options.SwaggerEndpoint("/swagger/v1/swagger.json", "IoT Ingestion API v1");
     });
 }
+app.MapGet("/", () => Results.Redirect("/swagger"));
 
 // POST /readings
 // Accepts a JSON array of up to 50,000 readings. Streams directly off the
 // request body's PipeReader - see ReadingStreamParser for why.
-app.MapPost("/readings", async (HttpContext ctx, AggregatorStore store) =>
+app.MapPost("/readings", async (HttpContext ctx, AggregatorStore store, ILogger<Program> logger) =>
 {
-    var accepted = await ReadingStreamParser.IngestAsync(
-        ctx.Request.BodyReader,
-        store,
-        ctx.RequestAborted);
+    logger.LogInformation("Received ingestion request from {RemoteIp}", ctx.Connection.RemoteIpAddress);
 
-    return Results.Ok(new { accepted });
+    var stopwatch = Stopwatch.StartNew();
+            var accepted = await ReadingStreamParser.IngestAsync(
+            ctx.Request.BodyReader,
+            store,
+            ctx.RequestAborted);
+
+        stopwatch.Stop();
+
+        logger.LogInformation("Accepted {AcceptedCount} readings in {ElapsedMilliseconds} ms",accepted,stopwatch.ElapsedMilliseconds);
+
+        return Results.Accepted(value: new { accepted });
+    
 })
 .WithName("IngestReadings")
 .WithSummary("Ingest a stream of IoT device readings.")
@@ -56,12 +72,18 @@ app.MapPost("/readings", async (HttpContext ctx, AggregatorStore store) =>
 
 // GET /readings/{deviceId}/aggregate
 // Returns count/min/max/average over the trailing 5-minute window.
-app.MapGet("/readings/{deviceId}/aggregate", (string deviceId, AggregatorStore store) =>
+app.MapGet("/readings/{deviceId}/aggregate", (string deviceId, AggregatorStore store, ILogger<Program> logger) =>
 {
     if (!store.TryGetSnapshot(deviceId, out var result))
     {
+        logger.LogWarning(
+        "Statistics requested for unknown device {DeviceId}",
+        deviceId);
+
         return Results.NotFound(new { deviceId, message = "No readings in the active window." });
     }
+
+    logger.LogInformation("Statistics returned for device {DeviceId}",deviceId);
 
     return Results.Ok(new
     {
@@ -75,7 +97,7 @@ app.MapGet("/readings/{deviceId}/aggregate", (string deviceId, AggregatorStore s
  .WithName("GetDeviceStatistics")
     .WithSummary("Returns the current five-minute statistics for a device.")
     .Produces<AggregateResult>(StatusCodes.Status200OK)
-    .Produces(StatusCodes.Status404NotFound); 
+    .Produces(StatusCodes.Status404NotFound);
 
 
 app.Run();
