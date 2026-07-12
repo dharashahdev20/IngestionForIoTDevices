@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\IngestionService.Api\IngestionService.Api.csproj" />
     <ProjectReference Include="..\IngestionService.Core\IngestionService.Core.csproj" />
   </ItemGroup>
 

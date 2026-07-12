@@ -17,31 +17,38 @@ public class StatisticsEndpointTests : IClassFixture<ApiFactory>
     [Fact]
     public async Task Should_Return_Aggregated_Statistics()
     {
-        var json = """
-        [
-          {
-            "deviceId":"device-1",
-            "timestamp":"2026-07-12T10:00:00Z",
-            "value":10
-          },
-          {
-            "deviceId":"device-1",
-            "timestamp":"2026-07-12T10:00:01Z",
-            "value":20
-          }
-        ]
-        """;
+        var now = DateTimeOffset.UtcNow;
 
-        await _client.PostAsync(
+        var json = $$"""
+[
+  {
+    "deviceId":"device-1",
+   "timestamp":"{{now.AddMilliseconds(-500):O}}",
+    "value":10
+  },
+  {
+    "deviceId":"device-1",
+    "timestamp":"{{now.AddMilliseconds(-100):O}}",
+    "value":20
+  }
+]
+""";
+
+        var postResponse = await _client.PostAsync(
             "/readings",
             new StringContent(json, Encoding.UTF8, "application/json"));
 
+        Assert.Equal(HttpStatusCode.Accepted, postResponse.StatusCode);
+
         var response = await _client.GetAsync("/readings/device-1/aggregate");
+
+        var getContent = await response.Content.ReadAsStringAsync();
+        Console.WriteLine(getContent);
 
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
         var result = await response.Content.ReadFromJsonAsync<AggregateResult>();
-      
+            
         Assert.Equal(2, result.Count);
         Assert.Equal(10, result.Min);
         Assert.Equal(20, result.Max);
