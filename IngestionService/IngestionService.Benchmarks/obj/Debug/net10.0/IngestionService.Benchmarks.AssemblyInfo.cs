@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("IngestionService.Benchmarks")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+361a41c7fbde56f6dea6b0d8372bb63325d05c5a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5b4a4043bb4004e074fc8d0534249f1b37ee3235")]
 [assembly: System.Reflection.AssemblyProductAttribute("IngestionService.Benchmarks")]
 [assembly: System.Reflection.AssemblyTitleAttribute("IngestionService.Benchmarks")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

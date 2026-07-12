@@ -1,0 +1,100 @@
+{
+  "openapi": "3.0.4",
+  "info": {
+    "title": "IoT Device Ingestion Service",
+    "description": "High-throughput ingestion service for IoT device.",
+    "version": "v1"
+  },
+  "paths": {
+    "/readings": {
+      "post": {
+        "tags": [
+          "IngestionService.Api"
+        ],
+        "summary": "Ingest a stream of IoT device readings.",
+        "description": "Accepts a JSON array of readings and processes them using a streaming parser.",
+        "operationId": "IngestReadings",
+        "responses": {
+          "202": {
+            "description": "Accepted"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/readings/{deviceId}/aggregate": {
+      "get": {
+        "tags": [
+          "IngestionService.Api"
+        ],
+        "summary": "Returns the current five-minute statistics for a device.",
+        "operationId": "GetDeviceStatistics",
+        "parameters": [
+          {
+            "name": "deviceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AggregateResult"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AggregateResult": {
+        "type": "object",
+        "properties": {
+          "deviceId": {
+            "type": "string",
+            "nullable": true
+          },
+          "count": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "min": {
+            "type": "number",
+            "format": "double"
+          },
+          "max": {
+            "type": "number",
+            "format": "double"
+          },
+          "average": {
+            "type": "number",
+            "format": "double"
+          },
+          "hasData": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "IngestionService.Api"
+    }
+  ]
+}
