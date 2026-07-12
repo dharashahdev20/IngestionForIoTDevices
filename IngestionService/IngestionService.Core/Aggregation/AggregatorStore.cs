@@ -8,9 +8,15 @@ namespace IngestionService.Core.Aggregation;
 /// insert, so devices are independent of one another - this is the layer
 /// that lets us avoid a single global lock across all ~10,000 devices.
 /// </summary>
-public sealed class AggregatorStore(TimeProvider timeProvider)
+public sealed class AggregatorStore
 {
-    private readonly TimeProvider _timeProvider = timeProvider;
+    private readonly TimeProvider _timeProvider;
+
+    public AggregatorStore(TimeProvider timeProvider)
+    {
+        _timeProvider = timeProvider;
+    }
+
     private readonly ConcurrentDictionary<string, DeviceAggregator> _devices = new();
 
     // Cached so GetOrAdd doesn't allocate a new closure/delegate per call

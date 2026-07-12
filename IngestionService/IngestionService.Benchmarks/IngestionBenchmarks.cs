@@ -11,8 +11,8 @@ BenchmarkRunner.Run<IngestionBenchmarks>();
 [ThreadingDiagnoser]
 public class IngestionBenchmarks
 {
-    private byte[] _payload50k = [];
-    private byte[] _payload1k = [];
+    private byte[] _payload50k = Array.Empty<byte>();
+    private byte[] _payload1k = Array.Empty<byte>();
 
     [GlobalSetup]
     public void Setup()

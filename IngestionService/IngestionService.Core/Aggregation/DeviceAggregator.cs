@@ -45,7 +45,7 @@ public sealed class DeviceAggregator
     }
 
     private readonly Bucket[] _buckets;
-    private readonly Lock _gate = new();
+    private readonly object _gate = new();
 
     public DeviceAggregator()
     {
