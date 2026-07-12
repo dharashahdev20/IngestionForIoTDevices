@@ -393,6 +393,16 @@
         "build": {
           "build/net8.0/xunit.runner.visualstudio.props": {}
         }
+      },
+      "IngestionService.Core/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v10.0",
+        "compile": {
+          "bin/placeholder/IngestionService.Core.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/IngestionService.Core.dll": {}
+        }
       }
     }
   },
@@ -903,10 +913,16 @@
         "xunit.runner.visualstudio.3.1.4.nupkg.sha512",
         "xunit.runner.visualstudio.nuspec"
       ]
+    },
+    "IngestionService.Core/1.0.0": {
+      "type": "project",
+      "path": "../IngestionService.Core/IngestionService.Core.csproj",
+      "msbuildProject": "../IngestionService.Core/IngestionService.Core.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net10.0": [
+      "IngestionService.Core >= 1.0.0",
       "Microsoft.NET.Test.Sdk >= 17.14.1",
       "coverlet.collector >= 6.0.4",
       "xunit >= 2.9.3",
@@ -946,7 +962,11 @@
         "net10.0": {
           "framework": "net10.0",
           "targetAlias": "net10.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\Sagar\\source\\repos\\IngestionForIoTDevices\\IngestionService\\IngestionService.Core\\IngestionService.Core.csproj": {
+              "projectPath": "C:\\Users\\Sagar\\source\\repos\\IngestionForIoTDevices\\IngestionService\\IngestionService.Core\\IngestionService.Core.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
