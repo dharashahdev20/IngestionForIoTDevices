@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("IngestionService.Tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+361a41c7fbde56f6dea6b0d8372bb63325d05c5a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+eb643e0d4e972a65fcbb2e1223b131767927c854")]
 [assembly: System.Reflection.AssemblyProductAttribute("IngestionService.Tests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("IngestionService.Tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
