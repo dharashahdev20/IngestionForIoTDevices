@@ -8,7 +8,7 @@ public class ConcurrencyTests
     [Fact]
     public async Task ConcurrentWrites_ToSameDevice_NoLostUpdates()
     {
-        var store = new AggregatorStore();
+        var store = new AggregatorStore(TimeProvider.System);
         var now = DateTime.UtcNow;
         const int writersCount = 32;
         const int writesPerWriter = 2_000;
@@ -21,20 +21,20 @@ public class ConcurrencyTests
                 // buckets and some collide - exercising both the "new
                 // bucket" and "existing bucket" code paths concurrently.
                 var ts = now.AddSeconds(-(i % 250));
-                store.Ingest("device-A", ts, 1.0, now);
+                store.Ingest("device-A", ts, 1.0);
             }
         })).ToArray();
 
         await Task.WhenAll(tasks);
 
-        Assert.True(store.TryGetSnapshot("device-A", now, out var result));
+        Assert.True(store.TryGetSnapshot("device-A", out var result));
         Assert.Equal(writersCount * writesPerWriter, result.Count);
     }
 
     [Fact]
     public async Task ConcurrentWrites_AndReads_DoNotObserveTornState()
     {
-        var store = new AggregatorStore();
+        var store = new AggregatorStore(TimeProvider.System);
         var now = DateTime.UtcNow;
         using var cts = new CancellationTokenSource();
 
@@ -42,7 +42,7 @@ public class ConcurrencyTests
         {
             for (var i = 0; i < 50_000 && !cts.IsCancellationRequested; i++)
             {
-                store.Ingest("device-B", now.AddSeconds(-(i % 250)), i, now);
+                store.Ingest("device-B", now.AddSeconds(-(i % 250)), i);
             }
         });
 
@@ -51,7 +51,7 @@ public class ConcurrencyTests
         {
             for (var i = 0; i < 5_000; i++)
             {
-                if (store.TryGetSnapshot("device-B", now, out var snap))
+                if (store.TryGetSnapshot("device-B", out var snap))
                 {
                     // Invariant that must hold no matter when we sample:
                     // min <= average <= max, count > 0.
@@ -73,7 +73,7 @@ public class ConcurrencyTests
     [Fact]
     public async Task ConcurrentWrites_AcrossManyDevices_EachDeviceIndependentlyCorrect()
     {
-        var store = new AggregatorStore();
+        var store = new AggregatorStore(TimeProvider.System);
         var now = DateTime.UtcNow;
         const int deviceCount = 100;
         const int writesPerDevice = 500;
@@ -83,7 +83,7 @@ public class ConcurrencyTests
             var deviceId = $"device-{d}";
             for (var i = 0; i < writesPerDevice; i++)
             {
-                store.Ingest(deviceId, now, 1.0, now);
+                store.Ingest(deviceId, now, 1.0);
             }
         })).ToArray();
 
@@ -91,7 +91,7 @@ public class ConcurrencyTests
 
         for (var d = 0; d < deviceCount; d++)
         {
-            Assert.True(store.TryGetSnapshot($"device-{d}", now, out var result));
+            Assert.True(store.TryGetSnapshot($"device-{d}", out var result));
             Assert.Equal(writesPerDevice, result.Count);
         }
     }

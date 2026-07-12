@@ -24,13 +24,13 @@ public class IngestionBenchmarks
     [Benchmark(Description = "Ingest 50,000 readings (single request, streaming parse)")]
     public async Task<long> Ingest_50k_SingleBatch()
     {
-        var store = new AggregatorStore();
+        var store = new AggregatorStore(TimeProvider.System);
         var pipe = new Pipe();
         var writeTask = pipe.Writer.WriteAsync(_payload50k).AsTask()
             .ContinueWith(_ => pipe.Writer.Complete());
 
         var accepted = await ReadingStreamParser.IngestAsync(
-            pipe.Reader, store, DateTime.UtcNow, CancellationToken.None);
+            pipe.Reader, store, CancellationToken.None);
 
         await writeTask;
         return accepted;
@@ -39,7 +39,7 @@ public class IngestionBenchmarks
     [Benchmark(Description = "Ingest 20 concurrent batches of 1,000 readings each")]
     public async Task<long> Ingest_20xConcurrent_1k()
     {
-        var store = new AggregatorStore();
+        var store = new AggregatorStore(TimeProvider.System);
 
         var tasks = Enumerable.Range(0, 20).Select(async _ =>
         {
@@ -48,7 +48,7 @@ public class IngestionBenchmarks
                 .ContinueWith(_ => pipe.Writer.Complete());
 
             var accepted = await ReadingStreamParser.IngestAsync(
-                pipe.Reader, store, DateTime.UtcNow, CancellationToken.None);
+                pipe.Reader, store, CancellationToken.None);
 
             await writeTask;
             return accepted;

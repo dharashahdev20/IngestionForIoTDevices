@@ -3,6 +3,9 @@ using IngestionService.Core.Ingestion;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//with TimeProvider.System, we can use DateTime.UtcNow in the code, but for testing we can inject a mock time provider to control the current time.
+builder.Services.AddSingleton(TimeProvider.System);
+
 // One store for the process lifetime, shared across all requests -
 // registered as a singleton since it's internally thread-safe
 // (ConcurrentDictionary + per-device locks).
@@ -17,8 +20,7 @@ app.MapPost("/readings", async (HttpContext ctx, AggregatorStore store) =>
 {
 var accepted = await ReadingStreamParser.IngestAsync(
     ctx.Request.BodyReader,
-    store,
-    DateTime.UtcNow,
+    store,   
     ctx.RequestAborted);
 
 return Results.Ok(new { accepted });
@@ -28,7 +30,7 @@ return Results.Ok(new { accepted });
 // Returns count/min/max/average over the trailing 5-minute window.
 app.MapGet("/readings/{deviceId}/aggregate", (string deviceId, AggregatorStore store) =>
 {
-if (!store.TryGetSnapshot(deviceId, DateTime.UtcNow, out var result))
+if (!store.TryGetSnapshot(deviceId, out var result))
 {
 return Results.NotFound(new { deviceId, message = "No readings in the active window." });
 }

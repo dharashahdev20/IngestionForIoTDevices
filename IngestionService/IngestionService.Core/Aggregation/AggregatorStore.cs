@@ -10,20 +10,31 @@ namespace IngestionService.Core.Aggregation;
 /// </summary>
 public sealed class AggregatorStore
 {
+    private readonly TimeProvider _timeProvider;
+
+    public AggregatorStore(TimeProvider timeProvider)
+    {
+        _timeProvider = timeProvider;
+    }
+
     private readonly ConcurrentDictionary<string, DeviceAggregator> _devices = new();
 
     // Cached so GetOrAdd doesn't allocate a new closure/delegate per call
     // on the hot path.
     private static readonly Func<string, DeviceAggregator> CreateAggregator = _ => new DeviceAggregator();
 
-    public void Ingest(string deviceId, DateTime timestampUtc, double value, DateTime nowUtc)
+    public void Ingest(string deviceId, DateTime timestampUtc, double value)
     {
+        var nowUtc = _timeProvider.GetUtcNow().UtcDateTime;
+
         var aggregator = _devices.GetOrAdd(deviceId, CreateAggregator);
         aggregator.Add(timestampUtc, value, nowUtc);
     }
 
-    public bool TryGetSnapshot(string deviceId, DateTime nowUtc, out AggregateResult result)
+    public bool TryGetSnapshot(string deviceId, out AggregateResult result)
     {
+        var nowUtc = _timeProvider.GetUtcNow().UtcDateTime;
+
         if (_devices.TryGetValue(deviceId, out var aggregator))
         {
             result = aggregator.Snapshot(deviceId, nowUtc);

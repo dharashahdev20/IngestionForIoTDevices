@@ -11,8 +11,8 @@ namespace IngestionService.Core.Ingestion;
 /// soon as it is parsed.
 ///
 /// Why this shape instead of System.Text.Json.JsonSerializer.DeserializeAsync
-/// &lt;List&lt;Reading&gt;&gt;:
-///   - DeserializeAsync&lt;List&lt;Reading&gt;&gt; would materialize up to 50,000
+/// <List<Reading>>:
+///   - DeserializeAsync<List<Reading>>; would materialize up to 50,000
 ///     Reading objects (or a 50k-element List) purely to throw them away
 ///     immediately after use - all allocation, no benefit.
 ///   - Utf8JsonReader is a ref struct that reads tokens directly from the
@@ -32,7 +32,6 @@ public static class ReadingStreamParser
     public static async Task<long> IngestAsync(
         PipeReader body,
         AggregatorStore store,
-        DateTime nowUtc,
         CancellationToken cancellationToken)
     {
         long accepted = 0;
@@ -49,7 +48,7 @@ public static class ReadingStreamParser
             var result = await body.ReadAsync(cancellationToken).ConfigureAwait(false);
             var buffer = result.Buffer;
 
-            var consumed = ProcessBuffer(ref buffer, ref state, result.IsCompleted, store, nowUtc, ref accepted, ref partial);
+            var consumed = ProcessBuffer(ref buffer, ref state, result.IsCompleted, store, ref accepted, ref partial);
 
             body.AdvanceTo(consumed, buffer.End);
 
@@ -85,7 +84,6 @@ public static class ReadingStreamParser
         ref JsonReaderState state,
         bool isFinalBlock,
         AggregatorStore store,
-        DateTime nowUtc,
         ref long accepted,
         ref PartialReading partial)
     {
@@ -99,7 +97,10 @@ public static class ReadingStreamParser
                     {
                         // reader.Read() below advances to the value token.
                         var propertyName = reader.ValueSpan;
-                        reader.Read();
+                        if (!reader.Read())
+                        {
+                            break; // If input ends mid-way through a property name, we can't read the value yet, so break and wait for more input.
+                        }
 
                         if (propertyName.SequenceEqual("deviceId"u8))
                         {
@@ -122,7 +123,7 @@ public static class ReadingStreamParser
                     {
                         if (partial.HaveDeviceId && partial.HaveTimestamp && partial.HaveValue)
                         {
-                            store.Ingest(partial.DeviceId!, partial.Timestamp, partial.Value, nowUtc);
+                            store.Ingest(partial.DeviceId!, partial.Timestamp, partial.Value);
                             accepted++;
                         }
 
