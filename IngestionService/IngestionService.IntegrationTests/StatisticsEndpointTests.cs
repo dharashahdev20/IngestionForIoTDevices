@@ -20,19 +20,19 @@ public class StatisticsEndpointTests : IClassFixture<ApiFactory>
         var now = DateTimeOffset.UtcNow;
 
         var json = $$"""
-[
-  {
-    "deviceId":"device-1",
-   "timestamp":"{{now.AddMilliseconds(-500):O}}",
-    "value":10
-  },
-  {
-    "deviceId":"device-1",
-    "timestamp":"{{now.AddMilliseconds(-100):O}}",
-    "value":20
-  }
-]
-""";
+                    [
+                      {
+                        "deviceId":"device-1",
+                       "timestamp":"{{now.AddMilliseconds(-500):O}}",
+                        "value":10
+                      },
+                      {
+                        "deviceId":"device-1",
+                        "timestamp":"{{now.AddMilliseconds(-100):O}}",
+                        "value":20
+                      }
+                    ]
+                    """;
 
         var postResponse = await _client.PostAsync(
             "/readings",
@@ -48,7 +48,7 @@ public class StatisticsEndpointTests : IClassFixture<ApiFactory>
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
         var result = await response.Content.ReadFromJsonAsync<AggregateResult>();
-            
+
         Assert.Equal(2, result.Count);
         Assert.Equal(10, result.Min);
         Assert.Equal(20, result.Max);
@@ -59,7 +59,7 @@ public class StatisticsEndpointTests : IClassFixture<ApiFactory>
     public async Task Should_Return_NotFound_For_Unknown_Device()
     {
         var response = await _client.GetAsync("/readings/unknown/aggregate");
-        
-        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);        
+
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
     }
 }
